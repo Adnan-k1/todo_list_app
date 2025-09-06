@@ -2,32 +2,44 @@ import 'package:get/get.dart';
 
 class Todo {
   String title;
-  String description;
-  String category;
-  bool isDone;
+  String description; // waktu start - end
+  String status; // Upcoming, In Progress, Done
+  int colorIndex;
 
   Todo({
     required this.title,
     required this.description,
-    required this.category,
-    this.isDone = false,
+    this.status = "Upcoming",
+    this.colorIndex = 0,
   });
 }
 
 class TodoController extends GetxController {
   var todos = <Todo>[].obs;
+  var history = <Todo>[].obs;
 
-  void addTodo(String title, String description, String category) {
-    if (title.isNotEmpty && description.isNotEmpty && category.isNotEmpty) {
+  void addTodo(String title, String description, int colorIndex) {
+    if (title.isNotEmpty) {
       todos.add(
-        Todo(title: title, description: description, category: category),
+        Todo(
+          title: title,
+          description: description,
+          colorIndex: colorIndex,
+        ),
       );
     }
   }
 
-  void toggleTodo(int index) {
-    todos[index].isDone = !todos[index].isDone;
-    todos.refresh();
+  void updateStatus(int index, String newStatus) {
+    todos[index].status = newStatus;
+
+    if (newStatus == "Done") {
+      // pindahkan ke history
+      history.add(todos[index]);
+      todos.removeAt(index);
+    } else {
+      todos.refresh();
+    }
   }
 
   void deleteTodo(int index) {

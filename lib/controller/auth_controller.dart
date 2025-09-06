@@ -9,21 +9,37 @@ class AuthController extends GetxController {
   final String dummyPassword = "gian";
 
   void login(BuildContext context) {
-    if (usernameController.text == dummyUsername &&
-        passwordController.text == dummyPassword) {
-      ScaffoldMessenger.of(
-        context,
-      ).showSnackBar(const SnackBar(content: Text("Login Berhasil")));
+    final username = usernameController.text.trim();
+    final password = passwordController.text.trim();
 
+    if (username == dummyUsername && password == dummyPassword) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text("✅ Login Berhasil"),
+          backgroundColor: Colors.green, // sukses -> hijau
+          behavior: SnackBarBehavior.floating,
+        ),
+      );
       Get.offAllNamed('/dashboard');
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text("Username / Password salah")),
+        const SnackBar(
+          content: Text("❌ Username / Password salah"),
+          backgroundColor: Colors.red, // gagal -> merah
+          behavior: SnackBarBehavior.floating,
+        ),
       );
     }
   }
 
   void logout() {
     Get.offAllNamed('/login');
+  }
+
+  @override
+  void onClose() {
+    usernameController.dispose();
+    passwordController.dispose();
+    super.onClose();
   }
 }
