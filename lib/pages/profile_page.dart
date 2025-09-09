@@ -15,9 +15,11 @@ class ProfilePage extends StatelessWidget {
               children: const [
                 CircleAvatar(radius: 40, child: Icon(Icons.person, size: 40)),
                 SizedBox(height: 12),
-                Text("Arza Gian",
-                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-                Text("arza@example.com"),
+                Text(
+                  "Arza Gian",
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                ),
+                Text("arzagian@gmail.com"),
               ],
             ),
           ),

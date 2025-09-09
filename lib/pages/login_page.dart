@@ -6,7 +6,7 @@ class LoginPage extends GetView<AuthController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFEFF2F9), // background soft biru muda
+      backgroundColor: const Color(0xFFEFF2F9),
       body: Center(
         child: SingleChildScrollView(
           padding: const EdgeInsets.all(24),
@@ -20,15 +20,13 @@ class LoginPage extends GetView<AuthController> {
                   color: Colors.black12,
                   blurRadius: 12,
                   offset: Offset(0, 6),
-                )
+                ),
               ],
             ),
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                // Logo (dummy, bisa ganti gambar asset/logo asli)
-                const Icon(Icons.task_alt,
-                    size: 70, color: Colors.blueAccent),
+                const Icon(Icons.task_alt, size: 70, color: Colors.blueAccent),
 
                 const SizedBox(height: 16),
 
@@ -42,8 +40,6 @@ class LoginPage extends GetView<AuthController> {
                 ),
 
                 const SizedBox(height: 28),
-
-                // Username / Email
                 TextField(
                   controller: controller.usernameController,
                   decoration: InputDecoration(
@@ -55,8 +51,6 @@ class LoginPage extends GetView<AuthController> {
                   ),
                 ),
                 const SizedBox(height: 16),
-
-                // Password
                 TextField(
                   controller: controller.passwordController,
                   obscureText: true,
@@ -69,8 +63,6 @@ class LoginPage extends GetView<AuthController> {
                   ),
                 ),
                 const SizedBox(height: 24),
-
-                // Tombol Login
                 SizedBox(
                   width: double.infinity,
                   child: ElevatedButton(
@@ -93,8 +85,6 @@ class LoginPage extends GetView<AuthController> {
                 ),
 
                 const SizedBox(height: 20),
-
-                // Text bawah
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -113,9 +103,9 @@ class LoginPage extends GetView<AuthController> {
                           fontWeight: FontWeight.bold,
                         ),
                       ),
-                    )
+                    ),
                   ],
-                )
+                ),
               ],
             ),
           ),
