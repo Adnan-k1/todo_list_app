@@ -2,8 +2,8 @@ import 'package:get/get.dart';
 
 class Todo {
   String title;
-  String description; // waktu start - end
-  String status; // Upcoming, In Progress, Done
+  String description;
+  String status;
   int colorIndex;
 
   Todo({
@@ -21,11 +21,7 @@ class TodoController extends GetxController {
   void addTodo(String title, String description, int colorIndex) {
     if (title.isNotEmpty) {
       todos.add(
-        Todo(
-          title: title,
-          description: description,
-          colorIndex: colorIndex,
-        ),
+        Todo(title: title, description: description, colorIndex: colorIndex),
       );
     }
   }
@@ -34,7 +30,6 @@ class TodoController extends GetxController {
     todos[index].status = newStatus;
 
     if (newStatus == "Done") {
-      // pindahkan ke history
       history.add(todos[index]);
       todos.removeAt(index);
     } else {

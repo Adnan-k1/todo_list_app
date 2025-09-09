@@ -18,15 +18,10 @@ class HomePage extends GetView<TodoController> {
     }
   }
 
-  
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text("Today's Tasks"),
-        centerTitle: true,
-      ),
+      appBar: AppBar(title: const Text("Today's Tasks"), centerTitle: true),
       body: Obx(() {
         if (controller.todos.isEmpty) {
           return const Center(child: Text("Belum ada todo"));
@@ -49,7 +44,9 @@ class HomePage extends GetView<TodoController> {
                   Text(
                     todo.title,
                     style: const TextStyle(
-                        fontSize: 16, fontWeight: FontWeight.bold),
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                   const SizedBox(height: 6),
                   Text(
@@ -57,18 +54,15 @@ class HomePage extends GetView<TodoController> {
                     style: const TextStyle(color: Colors.black54),
                   ),
                   const SizedBox(height: 8),
-
-                  // Status dengan Dropdown
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       DropdownButton<String>(
                         value: todo.status,
                         items: ["Upcoming", "In Progress", "Done"]
-                            .map((s) => DropdownMenuItem(
-                                  value: s,
-                                  child: Text(s),
-                                ))
+                            .map(
+                              (s) => DropdownMenuItem(value: s, child: Text(s)),
+                            )
                             .toList(),
                         onChanged: (val) {
                           if (val != null) {
@@ -78,15 +72,18 @@ class HomePage extends GetView<TodoController> {
                       ),
                       Container(
                         padding: const EdgeInsets.symmetric(
-                            horizontal: 12, vertical: 6),
+                          horizontal: 12,
+                          vertical: 6,
+                        ),
                         decoration: BoxDecoration(
-                        
                           borderRadius: BorderRadius.circular(20),
                         ),
                         child: Text(
                           todo.status,
                           style: const TextStyle(
-                              color: Colors.white, fontSize: 12),
+                            color: Colors.white,
+                            fontSize: 12,
+                          ),
                         ),
                       ),
                     ],

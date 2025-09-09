@@ -18,7 +18,7 @@ class HistoryPage extends GetView<HistoryController> {
               onDelete: () => controller.removeFromHistory(todo),
               onStatusChanged: (status) {
                 todo.status = status ?? todo.status;
-                controller.update(); // refresh UI jika status diubah
+                controller.update();
               },
             );
           },
