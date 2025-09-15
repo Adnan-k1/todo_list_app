@@ -5,14 +5,14 @@ import '../controller/todo_controller.dart';
 class HomePage extends GetView<TodoController> {
   const HomePage({super.key});
 
-  Color _getCardColor(String status) {
-    switch (status) {
-      case "Done":
-        return const Color(0xFFD1C4E9);
-      case "In Progress":
-        return const Color(0xFFB3E5FC);
-      case "Upcoming":
-        return const Color(0xFFC8E6C9);
+  Color _getCardColor(int colorIndex) {
+    switch (colorIndex) {
+      case 0:
+        return const Color(0xFFC8E6C9); 
+      case 1:
+        return const Color(0xFFB3E5FC); 
+      case 2:
+        return const Color(0xFFD1C4E9); 
       default:
         return Colors.grey.shade200;
     }
@@ -34,7 +34,7 @@ class HomePage extends GetView<TodoController> {
             final todo = controller.todos[index];
             return Container(
               decoration: BoxDecoration(
-                color: _getCardColor(todo.status),
+                color: _getCardColor(todo.colorIndex),
                 borderRadius: BorderRadius.circular(16),
               ),
               padding: const EdgeInsets.all(16),
@@ -48,11 +48,13 @@ class HomePage extends GetView<TodoController> {
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                  const SizedBox(height: 6),
-                  Text(
-                    todo.description,
-                    style: const TextStyle(color: Colors.black54),
-                  ),
+                  if (todo.startTime != null && todo.endTime != null) ...[
+                    const SizedBox(height: 6),
+                    Text(
+                      "${todo.startTime} - ${todo.endTime}",
+                      style: const TextStyle(color: Colors.black54),
+                    ),
+                  ],
                   const SizedBox(height: 8),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -61,7 +63,8 @@ class HomePage extends GetView<TodoController> {
                         value: todo.status,
                         items: ["Upcoming", "In Progress", "Done"]
                             .map(
-                              (s) => DropdownMenuItem(value: s, child: Text(s)),
+                              (s) =>
+                                  DropdownMenuItem(value: s, child: Text(s)),
                             )
                             .toList(),
                         onChanged: (val) {
@@ -76,6 +79,7 @@ class HomePage extends GetView<TodoController> {
                           vertical: 6,
                         ),
                         decoration: BoxDecoration(
+                          color: Colors.black.withOpacity(0.3),
                           borderRadius: BorderRadius.circular(20),
                         ),
                         child: Text(

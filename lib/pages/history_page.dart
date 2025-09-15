@@ -7,7 +7,6 @@ class HistoryPage extends GetView<HistoryController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text("History")),
       body: Obx(
         () => ListView.builder(
           itemCount: controller.completedTodos.length,
@@ -15,7 +14,7 @@ class HistoryPage extends GetView<HistoryController> {
             final todo = controller.completedTodos[index];
             return TodoCard(
               todo: todo,
-              onDelete: () => controller.removeFromHistory(todo),
+              onDelete: () => controller.confirmRemoveFromHistory(todo), 
               onStatusChanged: (status) {
                 todo.status = status ?? todo.status;
                 controller.update();

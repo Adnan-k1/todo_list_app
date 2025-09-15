@@ -11,35 +11,45 @@ class LoginPage extends GetView<AuthController> {
         child: SingleChildScrollView(
           padding: const EdgeInsets.all(24),
           child: Container(
-            padding: const EdgeInsets.all(28),
+            padding: const EdgeInsets.symmetric(horizontal: 28, vertical: 36),
             decoration: BoxDecoration(
               color: Colors.white,
-              borderRadius: BorderRadius.circular(20),
+              borderRadius: BorderRadius.circular(18),
               boxShadow: [
                 BoxShadow(
-                  color: Colors.black12,
-                  blurRadius: 12,
-                  offset: Offset(0, 6),
+                  color: Colors.black12.withOpacity(0.1),
+                  blurRadius: 15,
+                  offset: const Offset(0, 6),
                 ),
               ],
             ),
             child: Column(
               mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                const Icon(Icons.task_alt, size: 70, color: Colors.blueAccent),
-
-                const SizedBox(height: 16),
-
+                // Judul
                 const Text(
-                  "Login to your Account",
+                  "Welcome Back",
+                  textAlign: TextAlign.center,
                   style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.w600,
+                    fontSize: 22,
+                    fontWeight: FontWeight.bold,
                     color: Colors.black87,
+                  ),
+                ),
+                const SizedBox(height: 8),
+                const Text(
+                  "Login to your account",
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: 14,
+                    color: Colors.black54,
                   ),
                 ),
 
                 const SizedBox(height: 28),
+
+                // Email
                 TextField(
                   controller: controller.usernameController,
                   decoration: InputDecoration(
@@ -50,7 +60,10 @@ class LoginPage extends GetView<AuthController> {
                     ),
                   ),
                 ),
+
                 const SizedBox(height: 16),
+
+                // Password
                 TextField(
                   controller: controller.passwordController,
                   obscureText: true,
@@ -62,7 +75,10 @@ class LoginPage extends GetView<AuthController> {
                     ),
                   ),
                 ),
+
                 const SizedBox(height: 24),
+
+                // Tombol Login
                 SizedBox(
                   width: double.infinity,
                   child: ElevatedButton(
@@ -75,36 +91,14 @@ class LoginPage extends GetView<AuthController> {
                     ),
                     onPressed: () => controller.login(context),
                     child: const Text(
-                      "Sign in",
+                      "Sign In",
                       style: TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.bold,
+                        color: Colors.white,
                       ),
                     ),
                   ),
-                ),
-
-                const SizedBox(height: 20),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    const Text(
-                      "Don’t have an account?",
-                      style: TextStyle(color: Colors.black54),
-                    ),
-                    TextButton(
-                      onPressed: () {
-                        // nanti bisa diarahkan ke halaman register
-                      },
-                      child: const Text(
-                        "Sign up",
-                        style: TextStyle(
-                          color: Colors.blueAccent,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ),
-                  ],
                 ),
               ],
             ),

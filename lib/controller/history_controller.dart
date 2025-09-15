@@ -6,7 +6,22 @@ class HistoryController extends GetxController {
 
   RxList<Todo> get completedTodos => todoController.history;
 
-  void removeFromHistory(Todo todo) {
-    todoController.history.remove(todo);
+  void confirmRemoveFromHistory(Todo todo) {
+    Get.defaultDialog(
+      title: "Konfirmasi",
+      middleText: "Apakah kamu yakin ingin menghapus todo ini dari riwayat?",
+      textCancel: "Batal",
+      textConfirm: "Hapus",
+      confirmTextColor: Get.theme.colorScheme.onPrimary,
+      onConfirm: () {
+        todoController.history.remove(todo);
+        Get.back(); 
+        Get.snackbar(
+          "Berhasil",
+          "Todo berhasil dihapus dari history",
+          snackPosition: SnackPosition.BOTTOM,
+        );
+      },
+    );
   }
 }

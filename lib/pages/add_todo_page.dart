@@ -52,40 +52,6 @@ class AddTodoPage extends GetView<TodoController> {
               ],
             ),
 
-            const SizedBox(height: 20),
-            const Text("Color", style: TextStyle(fontWeight: FontWeight.w600)),
-            const SizedBox(height: 10),
-            Obx(
-              () => Row(
-                children: List.generate(4, (index) {
-                  final colors = [
-                    Colors.purple,
-                    Colors.blue,
-                    Colors.teal,
-                    Colors.orange,
-                  ];
-                  return GestureDetector(
-                    onTap: () => selectedColor.value = index,
-                    child: Container(
-                      margin: const EdgeInsets.only(right: 12),
-                      width: 32,
-                      height: 32,
-                      decoration: BoxDecoration(
-                        color: colors[index],
-                        shape: BoxShape.circle,
-                        border: Border.all(
-                          color: selectedColor.value == index
-                              ? Colors.black
-                              : Colors.transparent,
-                          width: 2,
-                        ),
-                      ),
-                    ),
-                  );
-                }),
-              ),
-            ),
-
             const Spacer(),
 
             SizedBox(
@@ -99,12 +65,31 @@ class AddTodoPage extends GetView<TodoController> {
                   ),
                 ),
                 onPressed: () {
-                  controller.addTodo(
-                    titleCtrl.text,
-                    "${startTimeCtrl.text} - ${endTimeCtrl.text}",
-                    selectedColor.value,
+                  if (titleCtrl.text.isEmpty) {
+                    Get.snackbar("Error", "Task name tidak boleh kosong",
+                        snackPosition: SnackPosition.TOP);
+                    return;
+                  }
+
+                  Get.defaultDialog(
+                    title: "Konfirmasi",
+                    middleText: "Apakah kamu yakin ingin menyimpan task ini?",
+                    textCancel: "Batal",
+                    textConfirm: "Simpan",
+                    confirmTextColor: Colors.white,
+                    onConfirm: () {
+                      controller.addTodo(
+                        titleCtrl.text,
+                        "${startTimeCtrl.text} - ${endTimeCtrl.text}",
+                        selectedColor.value,
+                      );
+
+                      Get.back();
+                      Get.back(); 
+                      Get.snackbar("Sukses", "Todo berhasil ditambahkan",
+                          snackPosition: SnackPosition.TOP);
+                    },
                   );
-                  Get.back();
                 },
                 child: const Text(
                   "Add",
