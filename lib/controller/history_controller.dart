@@ -15,11 +15,11 @@ class HistoryController extends GetxController {
       confirmTextColor: Get.theme.colorScheme.onPrimary,
       onConfirm: () {
         todoController.history.remove(todo);
-        Get.back(); 
+        Get.back();
         Get.snackbar(
           "Berhasil",
           "Todo berhasil dihapus dari history",
-          snackPosition: SnackPosition.BOTTOM,
+          snackPosition: SnackPosition.TOP,
         );
       },
     );

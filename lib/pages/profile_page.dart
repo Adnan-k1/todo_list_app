@@ -10,14 +10,14 @@ class ProfilePage extends StatelessWidget {
           shrinkWrap: true,
           children: [
             ProfileCard(
-              name: "Gian Adanan Sumaryo",
-              email: "gianadanansumaryo@gmail.com",
+              name: "Gian Adnan Sumaryo",
+              email: "gianadnansumaryo@gmail.com",
               imagePath: "lib/assets/images/gian.png",
             ),
             const SizedBox(height: 16),
             ProfileCard(
-              name: "Arja Armandhito",
-              email: "arja.armandhito@gmail.com",
+              name: "Arza Armandhito",
+              email: "arzaarmandhito@gmail.com",
               imagePath: "lib/assets/images/arja.png",
             ),
           ],
@@ -49,10 +49,7 @@ class ProfileCard extends StatelessWidget {
         padding: const EdgeInsets.all(16),
         child: Row(
           children: [
-            CircleAvatar(
-              radius: 35,
-              backgroundImage: AssetImage(imagePath),
-            ),
+            CircleAvatar(radius: 35, backgroundImage: AssetImage(imagePath)),
             const SizedBox(width: 16),
             Expanded(
               child: Column(
@@ -61,7 +58,9 @@ class ProfileCard extends StatelessWidget {
                   Text(
                     name,
                     style: const TextStyle(
-                        fontSize: 18, fontWeight: FontWeight.bold),
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                   const SizedBox(height: 4),
                   Text(email),

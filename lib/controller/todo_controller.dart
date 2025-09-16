@@ -28,7 +28,6 @@ class TodoController extends GetxController {
   var todos = <Todo>[].obs;
   var history = <Todo>[].obs;
 
-  /// Versi sederhana
   void addTodo(String title, String description, int colorIndex) {
     if (title.isNotEmpty) {
       todos.add(
@@ -37,7 +36,6 @@ class TodoController extends GetxController {
     }
   }
 
-  /// Versi lengkap: save dari input form
   void saveTodo({
     required TextEditingController titleCtrl,
     required TextEditingController startTimeCtrl,
@@ -54,13 +52,11 @@ class TodoController extends GetxController {
       ),
     );
 
-    // reset input
     titleCtrl.clear();
     startTimeCtrl.clear();
     endTimeCtrl.clear();
   }
 
-  /// Update status dan warna
   void updateStatus(int index, String newStatus) {
     if (index < 0 || index >= todos.length) return;
 
