@@ -22,7 +22,7 @@ class CustomDrawer extends StatelessWidget {
               ),
             ),
             accountEmail: const Text(
-              "arzaadnansumaryo@gmail.com",
+              "arzaaaaadnansumaryo@gmail.com",
               style: TextStyle(
                 color: Colors.black87,
                 fontSize: 14,
