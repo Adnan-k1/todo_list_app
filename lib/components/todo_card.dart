@@ -5,22 +5,26 @@ class TodoCard extends StatelessWidget {
   final Todo todo;
   final VoidCallback? onDelete;
   final ValueChanged<String?>? onStatusChanged;
+  final bool showDelete;      // ⬅️ untuk tampilkan / sembunyikan icon hapus
+  final bool enableDropdown;  // ⬅️ untuk aktif / nonaktif dropdown
 
   const TodoCard({
     super.key,
     required this.todo,
     this.onDelete,
     this.onStatusChanged,
+    this.showDelete = true,       // default tampil
+    this.enableDropdown = true,   // default bisa diubah
   });
 
   Color _getStatusColor(String status) {
     switch (status) {
       case "Done":
-        
+        return Colors.green;
       case "In Progress":
-       
+        return Colors.orange;
       case "Upcoming":
-       
+        return Colors.blue;
       default:
         return Colors.grey;
     }
@@ -44,26 +48,37 @@ class TodoCard extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 6),
-            Text(todo.description, style: const TextStyle(color: Colors.black54)),
+            Text(
+              todo.description,
+              style: const TextStyle(color: Colors.black54),
+            ),
             const SizedBox(height: 12),
 
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                DropdownButton<String>(
-                  value: todo.status,
-                  underline: const SizedBox(),
-                  items: ["Upcoming", "In Progress", "Done"]
-                      .map((s) => DropdownMenuItem(
-                            value: s,
-                            child: Text(s),
-                          ))
-                      .toList(),
-                  onChanged: onStatusChanged,
-                ),
+                enableDropdown
+                    ? DropdownButton<String>(
+                        value: todo.status,
+                        underline: const SizedBox(),
+                        items: ["Upcoming", "In Progress", "Done"]
+                            .map((s) => DropdownMenuItem(
+                                  value: s,
+                                  child: Text(s),
+                                ))
+                            .toList(),
+                        onChanged: onStatusChanged,
+                      )
+                    : Text(todo.status, // kalau nonaktif tampil teks saja
+                        style: const TextStyle(
+                          fontSize: 14,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
 
                 Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
                   decoration: BoxDecoration(
                     color: _getStatusColor(todo.status),
                     borderRadius: BorderRadius.circular(20),
@@ -74,10 +89,11 @@ class TodoCard extends StatelessWidget {
                   ),
                 ),
 
-                IconButton(
-                  icon: const Icon(Icons.delete, color: Colors.red),
-                  onPressed: onDelete,
-                ),
+                if (showDelete) // hanya tampil kalau true
+                  IconButton(
+                    icon: const Icon(Icons.delete, color: Colors.red),
+                    onPressed: onDelete,
+                  ),
               ],
             ),
           ],

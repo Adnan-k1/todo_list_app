@@ -9,6 +9,9 @@ class AuthController extends GetxController {
   final String dummyusername = "arza";
   final String dummypassword = "gian";
 
+  // state untuk show/hide password
+  var isPasswordHidden = true.obs;
+
   void login(BuildContext context) {
     final username = usernameController.text.trim();
     final password = passwordController.text.trim();

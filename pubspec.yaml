@@ -33,6 +33,7 @@ flutter:
   assets:
     - lib/assets/images/gian.png
     - lib/assets/images/arja.png
+    - lib/assets/images/logo.png
 
 
   # An image asset can refer to one or more resolution-specific "variants", see

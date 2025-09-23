@@ -8,20 +8,25 @@ class HistoryPage extends GetView<HistoryController> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Obx(
-        () => ListView.builder(
-          itemCount: controller.completedTodos.length,
-          itemBuilder: (context, index) {
-            final todo = controller.completedTodos[index];
-            return TodoCard(
-              todo: todo,
-              onDelete: () => controller.confirmRemoveFromHistory(todo), 
-              onStatusChanged: (status) {
-                todo.status = status ?? todo.status;
-                controller.update();
-              },
+        () {
+          if (controller.completedTodos.isEmpty) {
+            return const Center(
+              child: Text("Belum ada riwayat todo"),
             );
-          },
-        ),
+          }
+          return ListView.builder(
+            itemCount: controller.completedTodos.length,
+            itemBuilder: (context, index) {
+              final todo = controller.completedTodos[index];
+              return TodoCard(
+                todo: todo,
+                onDelete: () => controller.confirmRemoveFromHistory(todo),
+                showDelete: true,      
+                enableDropdown: false, 
+              );
+            },
+          );
+        },
       ),
     );
   }

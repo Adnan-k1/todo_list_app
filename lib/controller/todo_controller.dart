@@ -11,7 +11,7 @@ class Todo {
 
   Todo({
     required this.title,
-    required this.description,
+    this.description = "",
     this.status = "Upcoming",
     this.colorIndex = 0,
     this.startTime,
@@ -20,43 +20,53 @@ class Todo {
 
   @override
   String toString() {
-    return "Todo(title: $title, desc: $description, status: $status, colorIndex: $colorIndex, start: $startTime, end: $endTime)";
+    return "Todo(title: $title, desc: $description, status: $status, "
+        "colorIndex: $colorIndex, start: $startTime, end: $endTime)";
   }
 }
 
 class TodoController extends GetxController {
-  var todos = <Todo>[].obs;
-  var history = <Todo>[].obs;
+  final todos = <Todo>[].obs;
+  final history = <Todo>[].obs;
 
+  /// Tambah todo dengan data minimal
   void addTodo(String title, String description, int colorIndex) {
-    if (title.isNotEmpty) {
-      todos.add(
-        Todo(title: title, description: description, colorIndex: colorIndex),
-      );
+    if (title.trim().isNotEmpty) {
+      todos.add(Todo(
+        title: title.trim(),
+        description: description.trim(),
+        colorIndex: colorIndex,
+      ));
     }
   }
 
+  /// Tambah todo pakai controller dari form
   void saveTodo({
     required TextEditingController titleCtrl,
     required TextEditingController startTimeCtrl,
     required TextEditingController endTimeCtrl,
   }) {
-    if (titleCtrl.text.isEmpty) return;
+    if (titleCtrl.text.trim().isEmpty) return;
 
     todos.add(
       Todo(
-        title: titleCtrl.text,
-        description: '',
-        startTime: startTimeCtrl.text.isNotEmpty ? startTimeCtrl.text : null,
-        endTime: endTimeCtrl.text.isNotEmpty ? endTimeCtrl.text : null,
+        title: titleCtrl.text.trim(),
+        description: "",
+        startTime: startTimeCtrl.text.trim().isNotEmpty
+            ? startTimeCtrl.text.trim()
+            : null,
+        endTime:
+            endTimeCtrl.text.trim().isNotEmpty ? endTimeCtrl.text.trim() : null,
       ),
     );
 
+    // Clear input field
     titleCtrl.clear();
     startTimeCtrl.clear();
     endTimeCtrl.clear();
   }
 
+  /// Update status todo dan pindahkan ke history kalau sudah "Done"
   void updateStatus(int index, String newStatus) {
     if (index < 0 || index >= todos.length) return;
 
@@ -77,18 +87,27 @@ class TodoController extends GetxController {
 
     if (newStatus == "Done") {
       history.add(todo);
-      Future.delayed(const Duration(milliseconds: 100), () {
-        if (index < todos.length) {
-          todos.removeAt(index);
+
+      // Hapus dari todo list setelah delay singkat (biar smooth)
+      Future.delayed(const Duration(milliseconds: 200), () {
+        if (index < todos.length && todos.contains(todo)) {
+          todos.remove(todo);
         }
       });
     } else {
-      todos.refresh();
+      todos.refresh(); // trigger UI update
     }
   }
 
+  /// Hapus todo dari list utama
   void deleteTodo(int index) {
     if (index < 0 || index >= todos.length) return;
     todos.removeAt(index);
+  }
+
+  /// Hapus dari history
+  void deleteFromHistory(int index) {
+    if (index < 0 || index >= history.length) return;
+    history.removeAt(index);
   }
 }

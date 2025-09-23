@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../controller/todo_controller.dart';
+import '../components/custom_text_field.dart';
+import '../components/custom_button.dart';
 
 class AddTodoPage extends GetView<TodoController> {
   final TextEditingController titleCtrl = TextEditingController();
@@ -16,7 +18,7 @@ class AddTodoPage extends GetView<TodoController> {
     return Scaffold(
       appBar: AppBar(
         title: const Text("Add Task"),
-        backgroundColor: Colors.blueAccent,
+        backgroundColor: const Color(0xFFEFF6F9),
         centerTitle: true,
       ),
       body: Padding(
@@ -24,114 +26,91 @@ class AddTodoPage extends GetView<TodoController> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text(
-              "Task Name",
-              style: TextStyle(fontWeight: FontWeight.w600),
-            ),
-            const SizedBox(height: 8),
-            TextField(
+            CustomTextField(
               controller: titleCtrl,
-              decoration: InputDecoration(
-                hintText: "Enter task name",
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(12),
-                ),
-              ),
+              label: "Task Name",
+              hint: "Enter task name",
             ),
 
             const SizedBox(height: 20),
+
             Row(
               children: [
                 Expanded(
-                  child: _buildTimeField("Start Time", startTimeCtrl, context),
+                  child: CustomTextField(
+                    controller: startTimeCtrl,
+                    label: "Start Time",
+                    hint: "e.g. 16:00",
+                    readOnly: true,
+                    suffixIcon: const Icon(Icons.access_time),
+                    onTap: () async {
+                      final time = await showTimePicker(
+                        context: context,
+                        initialTime: TimeOfDay.now(),
+                      );
+                      if (time != null) {
+                        startTimeCtrl.text = time.format(context);
+                      }
+                    },
+                  ),
                 ),
                 const SizedBox(width: 12),
                 Expanded(
-                  child: _buildTimeField("End Time", endTimeCtrl, context),
+                  child: CustomTextField(
+                    controller: endTimeCtrl,
+                    label: "End Time",
+                    hint: "e.g. 17:00",
+                    readOnly: true,
+                    suffixIcon: const Icon(Icons.access_time),
+                    onTap: () async {
+                      final time = await showTimePicker(
+                        context: context,
+                        initialTime: TimeOfDay.now(),
+                      );
+                      if (time != null) {
+                        endTimeCtrl.text = time.format(context);
+                      }
+                    },
+                  ),
                 ),
               ],
             ),
 
             const Spacer(),
 
-            SizedBox(
-              width: double.infinity,
-              child: ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  padding: const EdgeInsets.symmetric(vertical: 14),
-                  backgroundColor: Colors.blueAccent,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                ),
-                onPressed: () {
-                  if (titleCtrl.text.isEmpty) {
-                    Get.snackbar("Error", "Task name tidak boleh kosong",
+            CustomButton(
+              text: "Add",
+              onPressed: () {
+                if (titleCtrl.text.isEmpty) {
+                  Get.snackbar("Error", "Task name tidak boleh kosong",
+                      snackPosition: SnackPosition.TOP);
+                  return;
+                }
+
+                Get.defaultDialog(
+                  title: "Konfirmasi",
+                  middleText: "Apakah kamu yakin ingin menyimpan task ini?",
+                  textCancel: "Batal",
+                  textConfirm: "Simpan",
+                  confirmTextColor: Colors.white,
+                  onConfirm: () {
+                    controller.addTodo(
+                      titleCtrl.text,
+                      "${startTimeCtrl.text} - ${endTimeCtrl.text}",
+                      selectedColor.value,
+                    );
+
+                    Get.back();
+                    Get.back();
+                    Get.snackbar("Sukses", "Todo berhasil ditambahkan",
                         snackPosition: SnackPosition.TOP);
-                    return;
-                  }
-
-                  Get.defaultDialog(
-                    title: "Konfirmasi",
-                    middleText: "Apakah kamu yakin ingin menyimpan task ini?",
-                    textCancel: "Batal",
-                    textConfirm: "Simpan",
-                    confirmTextColor: Colors.white,
-                    onConfirm: () {
-                      controller.addTodo(
-                        titleCtrl.text,
-                        "${startTimeCtrl.text} - ${endTimeCtrl.text}",
-                        selectedColor.value,
-                      );
-
-                      Get.back();
-                      Get.back(); 
-                      Get.snackbar("Sukses", "Todo berhasil ditambahkan",
-                          snackPosition: SnackPosition.TOP);
-                    },
-                  );
-                },
-                child: const Text(
-                  "Add",
-                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-                ),
-              ),
+                  },
+                );
+              },
             ),
           ],
         ),
       ),
-    );
-  }
-
-  Widget _buildTimeField(
-    String label,
-    TextEditingController ctrl,
-    BuildContext context,
-  ) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(label),
-        const SizedBox(height: 6),
-        TextField(
-          controller: ctrl,
-          readOnly: true,
-          decoration: InputDecoration(
-            hintText: "e.g. 16:00",
-            suffixIcon: const Icon(Icons.access_time),
-            border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
-          ),
-          onTap: () async {
-            final time = await showTimePicker(
-              context: context,
-              initialTime: TimeOfDay.now(),
-            );
-            if (time != null) {
-              ctrl.text = time.format(context);
-            }
-          },
-        ),
-      ],
     );
   }
 }
