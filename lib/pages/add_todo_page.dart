@@ -82,8 +82,11 @@ class AddTodoPage extends GetView<TodoController> {
               text: "Add",
               onPressed: () {
                 if (titleCtrl.text.isEmpty) {
-                  Get.snackbar("Error", "Task name tidak boleh kosong",
-                      snackPosition: SnackPosition.TOP);
+                  Get.snackbar(
+                    "Error",
+                    "Task name tidak boleh kosong",
+                    snackPosition: SnackPosition.TOP,
+                  );
                   return;
                 }
 
@@ -102,8 +105,11 @@ class AddTodoPage extends GetView<TodoController> {
 
                     Get.back();
                     Get.back();
-                    Get.snackbar("Sukses", "Todo berhasil ditambahkan",
-                        snackPosition: SnackPosition.TOP);
+                    Get.snackbar(
+                      "Sukses",
+                      "Todo berhasil ditambahkan",
+                      snackPosition: SnackPosition.TOP,
+                    );
                   },
                 );
               },

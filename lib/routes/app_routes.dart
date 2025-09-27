@@ -5,4 +5,5 @@ class AppRoutes {
   static const history = '/history';
   static const home = '/home';
   static const profile = '/profile';
+  static const splashscreen = '/splashscreen';
 }

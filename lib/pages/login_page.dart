@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../controller/auth_controller.dart';
 
-
 class CustomTextField extends StatelessWidget {
   final TextEditingController controller;
   final String hintText;
@@ -38,7 +37,6 @@ class CustomTextField extends StatelessWidget {
   }
 }
 
-
 class CustomButton extends StatelessWidget {
   final String label;
   final VoidCallback onPressed;
@@ -71,7 +69,6 @@ class CustomButton extends StatelessWidget {
   }
 }
 
-
 class LogoWidget extends StatelessWidget {
   const LogoWidget({super.key});
 
@@ -97,7 +94,6 @@ class LogoWidget extends StatelessWidget {
     );
   }
 }
-
 
 class LoginPage extends GetView<AuthController> {
   const LoginPage({super.key});
@@ -156,7 +152,6 @@ class LoginPage extends GetView<AuthController> {
 
                       const SizedBox(height: 16),
 
-                      
                       Obx(
                         () => CustomTextField(
                           controller: controller.passwordController,
@@ -179,7 +174,6 @@ class LoginPage extends GetView<AuthController> {
 
                       const SizedBox(height: 24),
 
-                      
                       CustomButton(
                         label: "LOG IN",
                         onPressed: () => controller.login(context),

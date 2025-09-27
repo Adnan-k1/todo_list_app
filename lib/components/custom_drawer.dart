@@ -23,25 +23,15 @@ class CustomDrawer extends StatelessWidget {
             ),
             accountEmail: const Text(
               "arzaaaaadnansumaryo@gmail.com",
-              style: TextStyle(
-                color: Colors.black87,
-                fontSize: 14,
-              ),
+              style: TextStyle(color: Colors.black87, fontSize: 14),
             ),
             currentAccountPicture: const CircleAvatar(
               backgroundColor: Colors.white,
-              child: Icon(
-                Icons.person,
-                size: 40,
-                color: Colors.blue, 
-              ),
+              child: Icon(Icons.person, size: 40, color: Colors.blue),
             ),
             decoration: const BoxDecoration(
               gradient: LinearGradient(
-                colors: [
-                  Color(0xFFB3E5FC), 
-                  Color(0xFFEFF6F9), 
-                ],
+                colors: [Color(0xFFB3E5FC), Color(0xFFEFF6F9)],
                 begin: Alignment.topLeft,
                 end: Alignment.bottomRight,
               ),
@@ -66,30 +56,29 @@ class CustomDrawer extends StatelessWidget {
             color: Colors.green,
           ),
           const Divider(),
-          _drawerItem(
-            Icons.logout,
-            "Logout",
-            () {
-              Get.defaultDialog(
-                title: "Konfirmasi Logout",
-                middleText: "Apakah Anda yakin ingin keluar?",
-                textCancel: "Batal",
-                textConfirm: "Logout",
-                confirmTextColor: Colors.white,
-                onConfirm: () {
-                  Get.offAllNamed("/login");
-                },
-              );
-            },
-            color: Colors.red,
-          ),
+          _drawerItem(Icons.logout, "Logout", () {
+            Get.defaultDialog(
+              title: "Konfirmasi Logout",
+              middleText: "Apakah Anda yakin ingin keluar?",
+              textCancel: "Batal",
+              textConfirm: "Logout",
+              confirmTextColor: Colors.white,
+              onConfirm: () {
+                Get.offAllNamed("/login");
+              },
+            );
+          }, color: Colors.red),
         ],
       ),
     );
   }
 
-  Widget _drawerItem(IconData icon, String title, VoidCallback onTap,
-      {Color? color}) {
+  Widget _drawerItem(
+    IconData icon,
+    String title,
+    VoidCallback onTap, {
+    Color? color,
+  }) {
     return ListTile(
       leading: Icon(icon, color: color),
       title: Text(

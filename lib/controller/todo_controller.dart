@@ -32,11 +32,13 @@ class TodoController extends GetxController {
   /// Tambah todo dengan data minimal
   void addTodo(String title, String description, int colorIndex) {
     if (title.trim().isNotEmpty) {
-      todos.add(Todo(
-        title: title.trim(),
-        description: description.trim(),
-        colorIndex: colorIndex,
-      ));
+      todos.add(
+        Todo(
+          title: title.trim(),
+          description: description.trim(),
+          colorIndex: colorIndex,
+        ),
+      );
     }
   }
 
@@ -55,8 +57,9 @@ class TodoController extends GetxController {
         startTime: startTimeCtrl.text.trim().isNotEmpty
             ? startTimeCtrl.text.trim()
             : null,
-        endTime:
-            endTimeCtrl.text.trim().isNotEmpty ? endTimeCtrl.text.trim() : null,
+        endTime: endTimeCtrl.text.trim().isNotEmpty
+            ? endTimeCtrl.text.trim()
+            : null,
       ),
     );
 
