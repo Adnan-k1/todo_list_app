@@ -24,8 +24,8 @@ class HomePage extends GetView<TodoController> {
               onStatusChanged: (val) {
                 if (val != null) controller.updateStatus(index, val);
               },
-              showDelete: false, 
-              enableDropdown: true, 
+              showDelete: false,
+              enableDropdown: true,
             );
           },
         );

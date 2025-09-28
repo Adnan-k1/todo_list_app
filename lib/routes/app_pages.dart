@@ -1,4 +1,6 @@
 import 'package:get/get.dart';
+import 'package:todo_list_app/bindings/splashscreen_binding.dart';
+import 'package:todo_list_app/pages/splashscreen_page.dart';
 import '../bindings/auth_binding.dart';
 import '../bindings/home_binding.dart';
 import '../bindings/todo_binding.dart';
@@ -37,6 +39,11 @@ class AppPages {
       name: AppRoutes.home,
       page: () => HomePage(),
       binding: HomeBinding(),
+    ),
+    GetPage(
+      name: AppRoutes.splashscreen,
+      page: () => SplashscreenPage(),
+      binding: SplashscreenBinding(),
     ),
     GetPage(name: AppRoutes.profile, page: () => ProfilePage()),
   ];

@@ -15,7 +15,7 @@ class MyApp extends StatelessWidget {
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Todo List App',
-      initialRoute: AppRoutes.login,
+      initialRoute: AppRoutes.splashscreen,
       getPages: AppPages.pages,
     );
   }

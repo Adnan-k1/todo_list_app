@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:shared_preferences/shared_preferences.dart'; // Import SharedPreferences
 import '../routes/app_routes.dart';
 
 class AuthController extends GetxController {
@@ -9,14 +10,17 @@ class AuthController extends GetxController {
   final String dummyusername = "arza";
   final String dummypassword = "gian";
 
-  // state untuk show/hide password
   var isPasswordHidden = true.obs;
 
-  void login(BuildContext context) {
+  void login(BuildContext context) async {
     final username = usernameController.text.trim();
     final password = passwordController.text.trim();
 
     if (username == dummyusername && password == dummypassword) {
+      // 1. Simpan status login ke TRUE
+      final prefs = await SharedPreferences.getInstance();
+      await prefs.setBool("isLoggedIn", true);
+
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
           content: Text("✅ Login Berhasil"),
@@ -36,8 +40,31 @@ class AuthController extends GetxController {
     }
   }
 
-  void logout() {
+  void logout() async {
+    final prefs = await SharedPreferences.getInstance();
+
+    // *** PERUBAHAN KRUSIAL: Hapus kunci secara total dan pastikan penghapusan berhasil.
+    final bool removed = await prefs.remove("isLoggedIn");
+
+    // Logging untuk debug:
+    print('DEBUG LOGOUT: Status isLoggedIn berhasil dihapus? $removed');
+
+    // Tingkatkan penundaan menjadi 1.5 detik untuk memastikan I/O disk selesai.
+    await Future.delayed(const Duration(milliseconds: 1500));
+
+    Get.snackbar(
+      "Logout Berhasil",
+      "Anda telah berhasil keluar dari akun.",
+      backgroundColor: Colors.yellow.shade100,
+      colorText: Colors.black87,
+    );
+
+    // Navigasi setelah data dipastikan terhapus
     Get.offAllNamed(AppRoutes.login);
+  }
+
+  void togglePasswordVisibility() {
+    isPasswordHidden.value = !isPasswordHidden.value;
   }
 
   @override
