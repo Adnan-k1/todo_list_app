@@ -12,6 +12,11 @@ class AuthController extends GetxController {
 
   var isPasswordHidden = true.obs;
 
+  var isMobile = true.obs;
+  void updateLayout(BoxConstraints constraints) {
+    isMobile.value = constraints.maxWidth < 600;
+  }
+
   void login(BuildContext context) async {
     final username = usernameController.text.trim();
     final password = passwordController.text.trim();
