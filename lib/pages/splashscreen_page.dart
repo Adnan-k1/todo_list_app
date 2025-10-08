@@ -11,7 +11,7 @@ class SplashscreenPage extends StatelessWidget {
     final screenHeight = Get.height;
 
     return Scaffold(
-      backgroundColor: const Color(0xFFEFF6F9),
+      backgroundColor: const Color(0xFFEFF6F9), 
       body: Container(
         width: double.infinity,
         decoration: const BoxDecoration(
@@ -24,6 +24,7 @@ class SplashscreenPage extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
+           
             Container(
               decoration: const BoxDecoration(
                 shape: BoxShape.circle,
@@ -46,6 +47,7 @@ class SplashscreenPage extends StatelessWidget {
 
             const SizedBox(height: 28),
 
+            
             const Text(
               "MY TODO LIST APP",
               style: TextStyle(
@@ -58,13 +60,18 @@ class SplashscreenPage extends StatelessWidget {
 
             const SizedBox(height: 10),
 
+            
             Text(
               "Mengelola Tugas, Setiap Hari.",
-              style: TextStyle(fontSize: 16, color: Colors.grey.shade700),
+              style: TextStyle(
+                fontSize: 16,
+                color: Colors.grey.shade700,
+              ),
             ),
 
             SizedBox(height: screenHeight * 0.15),
 
+           
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 60.0),
               child: LinearProgressIndicator(
@@ -79,6 +86,7 @@ class SplashscreenPage extends StatelessWidget {
 
             const SizedBox(height: 16),
 
+           
             Text(
               "Memuat data...",
               style: TextStyle(

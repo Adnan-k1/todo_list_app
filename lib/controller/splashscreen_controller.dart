@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:developer';
@@ -5,6 +6,11 @@ import '../routes/app_routes.dart';
 
 class SplashscreenController extends GetxController {
   final minDuration = const Duration(seconds: 2);
+
+  var isMobile = true.obs;
+  void updateLayout(BoxConstraints constraints) {
+    isMobile.value = constraints.maxWidth < 600;
+  }
 
   @override
   void onInit() {

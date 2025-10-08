@@ -29,7 +29,11 @@ class TodoController extends GetxController {
   final todos = <Todo>[].obs;
   final history = <Todo>[].obs;
 
-  /// Tambah todo dengan data minimal
+  var isMobile = true.obs;
+  void updateLayout(BoxConstraints constraints) {
+    isMobile.value = constraints.maxWidth < 600;
+  }
+
   void addTodo(String title, String description, int colorIndex) {
     if (title.trim().isNotEmpty) {
       todos.add(
