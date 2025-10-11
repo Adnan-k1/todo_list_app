@@ -110,142 +110,108 @@ class LoginWidePage extends GetView<AuthController> {
           child: Container(
             constraints: const BoxConstraints(maxWidth: 1200),
             padding: const EdgeInsets.all(24),
-            child: isWideScreen
-                ? Row(
+            child: GridView.count(
+              crossAxisCount: isWideScreen ? 2 : 1,
+              crossAxisSpacing: 40,
+              mainAxisSpacing: 20,
+              childAspectRatio: isWideScreen ? 1.2 : 0.9,
+              children: [
+                Container(
+                  alignment: Alignment.center,
+                  child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      // KIRI: LOGO & TEKS
-                      Expanded(
-                        flex: 1,
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: const [
-                            LogoWidget(),
-                            SizedBox(height: 20),
-                            Text(
-                              "Welcome Back!",
-                              style: TextStyle(
-                                fontSize: 26,
-                                fontWeight: FontWeight.bold,
-                                color: Color(0xFF2C3E50),
-                              ),
-                            ),
-                            SizedBox(height: 8),
-                            Text(
-                              "Log in to continue your journey.",
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                fontSize: 16,
-                                color: Colors.black54,
-                              ),
-                            ),
-                          ],
+                    children: const [
+                      LogoWidget(),
+                      SizedBox(height: 20),
+                      Text(
+                        "Welcome Back!",
+                        style: TextStyle(
+                          fontSize: 26,
+                          fontWeight: FontWeight.bold,
+                          color: Color(0xFF2C3E50),
                         ),
                       ),
-
-                      const SizedBox(width: 60),
-
-                      // KANAN: FORM LOGIN
-                      const Expanded(flex: 1, child: _LoginFormSection()),
+                      SizedBox(height: 8),
+                      Text(
+                        "Log in to continue your journey.",
+                        textAlign: TextAlign.center,
+                        style: TextStyle(fontSize: 16, color: Colors.black54),
+                      ),
                     ],
-                  )
-                : SingleChildScrollView(
+                  ),
+                ),
+
+                // KANAN - FORM LOGIN
+                Container(
+                  alignment: Alignment.center,
+                  padding: const EdgeInsets.all(24),
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(40),
+                    boxShadow: const [
+                      BoxShadow(
+                        color: Colors.black12,
+                        blurRadius: 15,
+                        offset: Offset(0, -3),
+                      ),
+                    ],
+                  ),
+                  child: SingleChildScrollView(
                     child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: const [
-                        LogoWidget(),
-                        SizedBox(height: 20),
-                        Text(
-                          "Welcome Back!",
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        const Text(
+                          "LOGIN",
+                          textAlign: TextAlign.center,
                           style: TextStyle(
-                            fontSize: 26,
+                            fontSize: 22,
                             fontWeight: FontWeight.bold,
-                            color: Color(0xFF2C3E50),
                           ),
                         ),
-                        SizedBox(height: 8),
-                        Text(
-                          "Log in to continue your journey.",
-                          textAlign: TextAlign.center,
-                          style: TextStyle(fontSize: 16, color: Colors.black54),
+                        const SizedBox(height: 24),
+
+                        CustomTextField(
+                          controller: controller.usernameController,
+                          hintText: "enter your email",
+                          prefixIcon: Icons.mail_outline,
                         ),
-                        SizedBox(height: 40),
-                        _LoginFormSection(),
+
+                        const SizedBox(height: 16),
+
+                        Obx(
+                          () => CustomTextField(
+                            controller: controller.passwordController,
+                            hintText: "enter your password",
+                            prefixIcon: Icons.lock_outline,
+                            obscureText: controller.isPasswordHidden.value,
+                            suffixIcon: IconButton(
+                              icon: Icon(
+                                controller.isPasswordHidden.value
+                                    ? Icons.visibility_off
+                                    : Icons.visibility,
+                              ),
+                              onPressed: () {
+                                controller.isPasswordHidden.value =
+                                    !controller.isPasswordHidden.value;
+                              },
+                            ),
+                          ),
+                        ),
+
+                        const SizedBox(height: 24),
+
+                        CustomButton(
+                          label: "LOG IN",
+                          onPressed: () => controller.login(context),
+                        ),
                       ],
                     ),
                   ),
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-class _LoginFormSection extends GetView<AuthController> {
-  const _LoginFormSection();
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.all(24),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(40),
-        boxShadow: const [
-          BoxShadow(
-            color: Colors.black12,
-            blurRadius: 15,
-            offset: Offset(0, -3),
-          ),
-        ],
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          const Text(
-            "LOGIN",
-            textAlign: TextAlign.center,
-            style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
-          ),
-          const SizedBox(height: 24),
-
-          CustomTextField(
-            controller: controller.usernameController,
-            hintText: "enter your email",
-            prefixIcon: Icons.mail_outline,
-          ),
-
-          const SizedBox(height: 16),
-
-          Obx(
-            () => CustomTextField(
-              controller: controller.passwordController,
-              hintText: "enter your password",
-              prefixIcon: Icons.lock_outline,
-              obscureText: controller.isPasswordHidden.value,
-              suffixIcon: IconButton(
-                icon: Icon(
-                  controller.isPasswordHidden.value
-                      ? Icons.visibility_off
-                      : Icons.visibility,
                 ),
-                onPressed: () {
-                  controller.isPasswordHidden.value =
-                      !controller.isPasswordHidden.value;
-                },
-              ),
+              ],
             ),
           ),
-
-          const SizedBox(height: 24),
-
-          CustomButton(
-            label: "LOG IN",
-            onPressed: () => controller.login(context),
-          ),
-        ],
+        ),
       ),
     );
   }
