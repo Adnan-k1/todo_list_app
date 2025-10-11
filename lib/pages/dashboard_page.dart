@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../controller/home_controller.dart';
-import 'home_page.dart';
-import 'history_page.dart';
-import 'profile_page.dart';
+import 'mobile/home_page.dart';
+import 'mobile/history_page.dart';
+import 'mobile/profile_page.dart';
 import '../components/custom_app_bar.dart';
 import '../components/custom_drawer.dart';
 
@@ -17,9 +17,7 @@ class DashboardPage extends GetView<HomeController> {
   Widget build(BuildContext context) {
     return Obx(
       () => Scaffold(
-        appBar: CustomAppBar(
-          title: pageTitles[controller.currentIndex.value],
-        ),
+        appBar: CustomAppBar(title: pageTitles[controller.currentIndex.value]),
         drawer: CustomDrawer(
           onPageSelected: (index) {
             controller.changePage(index);

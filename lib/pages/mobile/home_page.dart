@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../controller/todo_controller.dart';
-import '../components/todo_card.dart';
+import '../../controller/todo_controller.dart';
+import '../../components/todo_card.dart';
 
 class HomePage extends GetView<TodoController> {
   const HomePage({super.key});

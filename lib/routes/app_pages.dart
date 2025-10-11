@@ -5,12 +5,12 @@ import '../bindings/auth_binding.dart';
 import '../bindings/home_binding.dart';
 import '../bindings/todo_binding.dart';
 import '../bindings/history_binding.dart';
-import '../pages/login_page.dart';
+import '../pages/mobile/login_page.dart';
 import '../pages/dashboard_page.dart';
 import '../pages/add_todo_page.dart';
-import '../pages/history_page.dart';
-import '../pages/home_page.dart';
-import '../pages/profile_page.dart';
+import '../pages/mobile/history_page.dart';
+import '../pages/mobile/home_page.dart';
+import '../pages/mobile/profile_page.dart';
 import 'app_routes.dart';
 
 class AppPages {
