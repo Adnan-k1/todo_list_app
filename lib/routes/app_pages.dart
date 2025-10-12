@@ -1,11 +1,12 @@
 import 'package:get/get.dart';
 import 'package:todo_list_app/bindings/splashscreen_binding.dart';
+import 'package:todo_list_app/pages/login_switch_page.dart';
 import 'package:todo_list_app/pages/splashscreen_page.dart';
 import '../bindings/auth_binding.dart';
 import '../bindings/home_binding.dart';
 import '../bindings/todo_binding.dart';
 import '../bindings/history_binding.dart';
-import '../pages/mobile/login_page.dart';
+import '../pages/login_switch_page.dart';
 import '../pages/dashboard_page.dart';
 import '../pages/add_todo_page.dart';
 import '../pages/mobile/history_page.dart';
@@ -17,7 +18,7 @@ class AppPages {
   static final pages = [
     GetPage(
       name: AppRoutes.login,
-      page: () => LoginPage(),
+      page: () => LoginSwitchPage(),
       binding: AuthBinding(),
     ),
     GetPage(
