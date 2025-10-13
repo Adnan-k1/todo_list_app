@@ -1,33 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-// Asumsi Anda memiliki AppRoutes, jika tidak, ganti dengan navigasi hardcode
-// import '../routes/app_routes.dart'; 
+import '../routes/app_routes.dart';
 
 class AuthController extends GetxController {
-  final usernameController = TextEditingController();
-  final passwordController = TextEditingController();
+  final TextEditingController usernameController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
 
-  final String dummyUsername = "arza";
-  final String dummyPassword = "gian";
+  final String dummyusername = "arza";
+  final String dummypassword = "gian";
 
-  // State untuk visibilitas password
   var isPasswordHidden = true.obs;
-  
-  // State untuk tata letak responsif (true jika lebar < 600)
   var isMobile = true.obs;
 
-  // Metode yang dipanggil oleh LayoutBuilder untuk memperbarui state responsif
-  void updateLayout(BoxConstraints constraints) {
-    // 600 adalah breakpoint standar untuk beralih dari mobile ke tablet/desktop
-    isMobile.value = constraints.maxWidth < 600;
-  }
-
+  // --- Login ---
   void login(BuildContext context) async {
     final username = usernameController.text.trim();
     final password = passwordController.text.trim();
 
-    if (username == dummyUsername && password == dummyPassword) {
+    if (username == dummyusername && password == dummypassword) {
+      // Simpan status login
       final prefs = await SharedPreferences.getInstance();
       await prefs.setBool("isLoggedIn", true);
 
@@ -39,8 +31,8 @@ class AuthController extends GetxController {
         ),
       );
 
-      // Navigasi ke dashboard (Ganti dengan Get.offAllNamed(AppRoutes.dashboard) jika tersedia)
-      print("DEBUG: Navigasi ke Dashboard"); 
+      // Navigasi ke Dashboard
+      Get.offAllNamed(AppRoutes.dashboard);
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
@@ -52,6 +44,25 @@ class AuthController extends GetxController {
     }
   }
 
+  // --- Logout ---
+  Future<void> logout() async {
+    Get.defaultDialog(
+      title: "Konfirmasi Logout",
+      middleText: "Apakah Anda yakin ingin logout?",
+      textCancel: "Batal",
+      textConfirm: "Logout",
+      confirmTextColor: Colors.white,
+      onConfirm: () async {
+        // Hapus status login
+        final prefs = await SharedPreferences.getInstance();
+        await prefs.remove("isLoggedIn");
+
+        // Navigasi ke Login Page
+        Get.offAllNamed(AppRoutes.login);
+      },
+    );
+  }
+
   void togglePasswordVisibility() {
     isPasswordHidden.value = !isPasswordHidden.value;
   }
@@ -61,5 +72,13 @@ class AuthController extends GetxController {
     usernameController.dispose();
     passwordController.dispose();
     super.onClose();
+  }
+
+  void updateLayout(BoxConstraints constraints) {
+    if (constraints.maxWidth > 600) {
+      isMobile.value = false; // layar lebar → wide
+    } else {
+      isMobile.value = true; // layar kecil → mobile
+    }
   }
 }

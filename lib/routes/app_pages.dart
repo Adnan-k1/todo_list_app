@@ -6,7 +6,11 @@ import '../bindings/auth_binding.dart';
 import '../bindings/home_binding.dart';
 import '../bindings/todo_binding.dart';
 import '../bindings/history_binding.dart';
+import '../bindings/profile_binding.dart';
 import '../pages/login_switch_page.dart';
+import '../pages/history_switch_page.dart';
+import '../pages/home_switch_page.dart';
+import '../pages/profile_switch_page.dart';
 import '../pages/dashboard_page.dart';
 import '../pages/add_todo_page.dart';
 import '../pages/mobile/history_page.dart';
@@ -33,12 +37,12 @@ class AppPages {
     ),
     GetPage(
       name: AppRoutes.history,
-      page: () => HistoryPage(),
+      page: () => HistorySwitchPage(),
       binding: HistoryBinding(),
     ),
     GetPage(
       name: AppRoutes.home,
-      page: () => HomePage(),
+      page: () => HomeSwitchPage(),
       binding: HomeBinding(),
     ),
     GetPage(
@@ -46,6 +50,10 @@ class AppPages {
       page: () => SplashscreenPage(),
       binding: SplashscreenBinding(),
     ),
-    GetPage(name: AppRoutes.profile, page: () => ProfilePage()),
+    GetPage(
+      name: AppRoutes.profile,
+      page: () => ProfileSwitchPage(),
+      binding: ProfileBinding(),
+    ),
   ];
 }

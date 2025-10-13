@@ -4,8 +4,8 @@ import 'package:todo_list_app/controller/todo_controller.dart';
 import 'package:todo_list_app/pages/mobile/home_page.dart';
 import 'package:todo_list_app/pages/widescreen/home_wide_page.dart';
 
-class ExamplePage extends StatelessWidget {
-  ExamplePage({super.key});
+class HomeSwitchPage extends StatelessWidget {
+  HomeSwitchPage({super.key});
 
   final controller = Get.find<TodoController>();
 
