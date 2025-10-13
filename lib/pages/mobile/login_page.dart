@@ -35,7 +35,10 @@ class CustomTextField extends StatelessWidget {
         hintStyle: TextStyle(color: Colors.grey.shade500),
         prefixIcon: Icon(prefixIcon, color: _primaryColor.withOpacity(0.8)),
         suffixIcon: suffixIcon,
-        contentPadding: const EdgeInsets.symmetric(vertical: 18, horizontal: 20),
+        contentPadding: const EdgeInsets.symmetric(
+          vertical: 18,
+          horizontal: 20,
+        ),
         filled: true,
         fillColor: Colors.white,
         border: OutlineInputBorder(
@@ -115,7 +118,10 @@ class LoginPage extends GetView<AuthController> {
             Expanded(
               child: Container(
                 width: double.infinity,
-                padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 24),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 32,
+                  vertical: 24,
+                ),
                 decoration: const BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.only(

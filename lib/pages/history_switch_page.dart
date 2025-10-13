@@ -4,8 +4,8 @@ import 'package:todo_list_app/controller/history_controller.dart';
 import 'package:todo_list_app/pages/mobile/history_page.dart';
 import 'package:todo_list_app/pages/widescreen/history_wide_page.dart';
 
-class ExamplePage extends StatelessWidget {
-  ExamplePage({super.key});
+class HistorySwitchPage extends StatelessWidget {
+  HistorySwitchPage({super.key});
 
   final controller = Get.find<HistoryController>();
 

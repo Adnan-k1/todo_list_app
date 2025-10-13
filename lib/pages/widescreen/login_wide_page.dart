@@ -12,17 +12,25 @@ class CustomWaveClipper extends CustomClipper<Path> {
   @override
   Path getClip(Size size) {
     final path = Path();
-    path.lineTo(0, size.height);
+    path.moveTo(0, size.height * 0.1);
 
     var firstControlPoint = Offset(size.width * 0.2, size.height - 40);
     var firstEndPoint = Offset(size.width * 0.4, size.height - 20);
     path.quadraticBezierTo(
-        firstControlPoint.dx, firstControlPoint.dy, firstEndPoint.dx, firstEndPoint.dy);
+      firstControlPoint.dx,
+      firstControlPoint.dy,
+      firstEndPoint.dx,
+      firstEndPoint.dy,
+    );
 
     var secondControlPoint = Offset(size.width * 0.65, size.height + 10);
     var secondEndPoint = Offset(size.width, size.height - 50);
     path.quadraticBezierTo(
-        secondControlPoint.dx, secondControlPoint.dy, secondEndPoint.dx, secondEndPoint.dy);
+      secondControlPoint.dx,
+      secondControlPoint.dy,
+      secondEndPoint.dx,
+      secondEndPoint.dy,
+    );
 
     path.lineTo(size.width, 0);
     path.lineTo(0, 0);
@@ -63,7 +71,10 @@ class CustomTextField extends StatelessWidget {
         hintStyle: TextStyle(color: Colors.grey.shade500),
         prefixIcon: Icon(prefixIcon, color: _primaryColor.withOpacity(0.8)),
         suffixIcon: suffixIcon,
-        contentPadding: const EdgeInsets.symmetric(vertical: 18, horizontal: 20),
+        contentPadding: const EdgeInsets.symmetric(
+          vertical: 18,
+          horizontal: 20,
+        ),
         filled: true,
         fillColor: Colors.white,
         border: OutlineInputBorder(
@@ -120,7 +131,7 @@ class CustomButton extends StatelessWidget {
   }
 }
 
-/// Logo Widget (bisa menampilkan child seperti Image.asset)
+/// Logo Widget
 class LogoWidget extends StatelessWidget {
   final Widget? child;
   final Color boundaryColor;
@@ -143,11 +154,21 @@ class LogoWidget extends StatelessWidget {
         shape: BoxShape.circle,
         border: Border.all(color: boundaryColor.withOpacity(0.5), width: 4),
         boxShadow: const [
-          BoxShadow(color: Colors.black12, blurRadius: 20, offset: Offset(0, 10)),
+          BoxShadow(
+            color: Colors.black12,
+            blurRadius: 20,
+            offset: Offset(0, 10),
+          ),
         ],
       ),
       child: Center(
-        child: child ?? Icon(Icons.assignment_turned_in_rounded, size: 80, color: _primaryColor),
+        child:
+            child ??
+            Icon(
+              Icons.assignment_turned_in_rounded,
+              size: 80,
+              color: _primaryColor,
+            ),
       ),
     );
   }
@@ -169,19 +190,27 @@ class LoginWidePage extends GetView<AuthController> {
             final Widget loginForm = _buildLoginForm(context);
 
             if (isWideScreen) {
-              // Wide screen layout (split panel)
+              // Wide screen layout
               return Center(
                 child: Container(
-                  constraints: const BoxConstraints(maxWidth: 1200, maxHeight: 700),
+                  constraints: const BoxConstraints(
+                    maxWidth: 1200,
+                    maxHeight: 700,
+                  ),
                   decoration: BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.circular(24),
                     boxShadow: [
-                      BoxShadow(color: Colors.black.withOpacity(0.1), blurRadius: 50, offset: const Offset(0, 20)),
+                      BoxShadow(
+                        color: Colors.black.withOpacity(0.1),
+                        blurRadius: 50,
+                        offset: const Offset(0, 20),
+                      ),
                     ],
                   ),
                   child: Row(
                     children: [
+                      // Left Decoration
                       Expanded(
                         flex: 5,
                         child: ClipRRect(
@@ -189,16 +218,20 @@ class LoginWidePage extends GetView<AuthController> {
                             topLeft: Radius.circular(24),
                             bottomLeft: Radius.circular(24),
                           ),
-                          child: decorationPanel,
+                          child: SingleChildScrollView(child: decorationPanel),
                         ),
                       ),
+                      // Right Login Form
                       Expanded(
                         flex: 5,
                         child: Center(
                           child: ConstrainedBox(
                             constraints: const BoxConstraints(maxWidth: 400),
                             child: SingleChildScrollView(
-                              padding: const EdgeInsets.symmetric(horizontal: 48, vertical: 32),
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 48,
+                                vertical: 32,
+                              ),
                               child: loginForm,
                             ),
                           ),
@@ -219,7 +252,7 @@ class LoginWidePage extends GetView<AuthController> {
                       height: constraints.maxHeight * 0.35,
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(30),
-                        child: decorationPanel,
+                        child: SingleChildScrollView(child: decorationPanel),
                       ),
                     ),
                     const SizedBox(height: 32),
@@ -235,70 +268,81 @@ class LoginWidePage extends GetView<AuthController> {
   }
 
   Widget _buildDecorationPanel() {
-    return ClipPath(
-      clipper: CustomWaveClipper(),
-      child: Container(
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-            colors: [_primaryColor.withOpacity(0.95), _primaryColor.withOpacity(0.75)],
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-          ),
+    return Container(
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          colors: [
+            _primaryColor.withOpacity(0.95),
+            _primaryColor.withOpacity(0.75),
+          ],
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
         ),
-        child: Center(
-          child: SingleChildScrollView(
-            padding: const EdgeInsets.all(32),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                LogoWidget(
-                  child: Image.asset(
-                    "lib/assets/images/logo.png",
-                    width: 135,
-                    height: 135,
-                    fit: BoxFit.contain,
-                  ),
-                ),
-                const SizedBox(height: 32),
-                const Text(
-                  "TO DO LIST",
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontSize: 40,
-                    fontWeight: FontWeight.w900,
-                    color: Colors.white,
-                    letterSpacing: 1.5,
-                  ),
-                ),
-                const SizedBox(height: 12),
-                const Text(
-                  "Everything you need, organized here.\nLog in to manage your productivity.",
-                  textAlign: TextAlign.center,
-                  style: TextStyle(fontSize: 18, color: Colors.white70, height: 1.4),
-                ),
-              ],
+      ),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 40),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            LogoWidget(
+              child: Image.asset(
+                "lib/assets/images/logo.png",
+                width: 135,
+                height: 135,
+                fit: BoxFit.contain,
+              ),
             ),
-          ),
+            const SizedBox(height: 32),
+            const Text(
+              "TO DO LIST",
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                fontSize: 40,
+                fontWeight: FontWeight.w900,
+                color: Colors.white,
+                letterSpacing: 1.5,
+              ),
+            ),
+            const SizedBox(height: 12),
+            const Text(
+              "Everything you need, organized here.\nLog in to manage your productivity.",
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                fontSize: 18,
+                color: Colors.white70,
+                height: 1.4,
+              ),
+            ),
+          ],
         ),
       ),
     );
   }
 
   Widget _buildLoginForm(BuildContext context) {
-    final controller = Get.isRegistered<AuthController>() ? Get.find<AuthController>() : Get.put(AuthController());
+    final controller = Get.isRegistered<AuthController>()
+        ? Get.find<AuthController>()
+        : Get.put(AuthController());
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         const Text(
           "Welcome Back!",
-          style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600, color: _primaryColor),
+          style: TextStyle(
+            fontSize: 18,
+            fontWeight: FontWeight.w600,
+            color: _primaryColor,
+          ),
         ),
         const SizedBox(height: 4),
         const Text(
           "LOGIN",
-          style: TextStyle(fontSize: 42, fontWeight: FontWeight.w900, color: _darkTextColor),
+          style: TextStyle(
+            fontSize: 42,
+            fontWeight: FontWeight.w900,
+            color: _darkTextColor,
+          ),
         ),
         const SizedBox(height: 8),
         Text(
@@ -320,10 +364,13 @@ class LoginWidePage extends GetView<AuthController> {
             obscureText: controller.isPasswordHidden.value,
             suffixIcon: IconButton(
               icon: Icon(
-                controller.isPasswordHidden.value ? Icons.visibility_off_rounded : Icons.visibility_rounded,
+                controller.isPasswordHidden.value
+                    ? Icons.visibility_off_rounded
+                    : Icons.visibility_rounded,
                 color: Colors.grey.shade500,
               ),
-              onPressed: () => controller.isPasswordHidden.value = !controller.isPasswordHidden.value,
+              onPressed: () => controller.isPasswordHidden.value =
+                  !controller.isPasswordHidden.value,
             ),
           ),
         ),
@@ -334,7 +381,11 @@ class LoginWidePage extends GetView<AuthController> {
             onTap: () {},
             child: const Text(
               "Forgot Password?",
-              style: TextStyle(color: _primaryColor, fontWeight: FontWeight.w500, fontSize: 14),
+              style: TextStyle(
+                color: _primaryColor,
+                fontWeight: FontWeight.w500,
+                fontSize: 14,
+              ),
             ),
           ),
         ),
@@ -347,10 +398,19 @@ class LoginWidePage extends GetView<AuthController> {
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text("Don't have an account? ", style: TextStyle(color: Colors.grey.shade600)),
+            Text(
+              "Don't have an account? ",
+              style: TextStyle(color: Colors.grey.shade600),
+            ),
             GestureDetector(
               onTap: () {},
-              child: const Text("Sign Up", style: TextStyle(color: _primaryColor, fontWeight: FontWeight.bold)),
+              child: const Text(
+                "Sign Up",
+                style: TextStyle(
+                  color: _primaryColor,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
             ),
           ],
         ),
