@@ -1,180 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:todo_list_app/controller/auth_controller.dart';
+import 'package:todo_list_app/components/custom_wave_clipper.dart';
+import 'package:todo_list_app/components/custom_text_field.dart';
+import 'package:todo_list_app/components/logo_widget.dart';
+import 'package:todo_list_app/components/custom_button.dart';
 
-// --- Reusable UI Components ---
 const Color _primaryColor = Color(0xFF7ACFB0);
 const Color _darkTextColor = Color(0xFF2C3E50);
 const Color _scaffoldBackgroundColor = Color(0xFFF7F9FB);
 
-/// Custom Clipper untuk panel dekoratif kiri
-class CustomWaveClipper extends CustomClipper<Path> {
-  @override
-  Path getClip(Size size) {
-    final path = Path();
-    path.moveTo(0, size.height * 0.1);
-
-    var firstControlPoint = Offset(size.width * 0.2, size.height - 40);
-    var firstEndPoint = Offset(size.width * 0.4, size.height - 20);
-    path.quadraticBezierTo(
-      firstControlPoint.dx,
-      firstControlPoint.dy,
-      firstEndPoint.dx,
-      firstEndPoint.dy,
-    );
-
-    var secondControlPoint = Offset(size.width * 0.65, size.height + 10);
-    var secondEndPoint = Offset(size.width, size.height - 50);
-    path.quadraticBezierTo(
-      secondControlPoint.dx,
-      secondControlPoint.dy,
-      secondEndPoint.dx,
-      secondEndPoint.dy,
-    );
-
-    path.lineTo(size.width, 0);
-    path.lineTo(0, 0);
-    path.close();
-    return path;
-  }
-
-  @override
-  bool shouldReclip(covariant CustomClipper<Path> oldClipper) => false;
-}
-
-/// Custom Text Field
-class CustomTextField extends StatelessWidget {
-  final TextEditingController controller;
-  final String hintText;
-  final IconData prefixIcon;
-  final bool obscureText;
-  final Widget? suffixIcon;
-
-  const CustomTextField({
-    super.key,
-    required this.controller,
-    required this.hintText,
-    required this.prefixIcon,
-    this.obscureText = false,
-    this.suffixIcon,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    const double borderRadius = 30.0;
-    return TextField(
-      controller: controller,
-      obscureText: obscureText,
-      style: const TextStyle(color: _darkTextColor, fontSize: 16),
-      decoration: InputDecoration(
-        hintText: hintText,
-        hintStyle: TextStyle(color: Colors.grey.shade500),
-        prefixIcon: Icon(prefixIcon, color: _primaryColor.withOpacity(0.8)),
-        suffixIcon: suffixIcon,
-        contentPadding: const EdgeInsets.symmetric(
-          vertical: 18,
-          horizontal: 20,
-        ),
-        filled: true,
-        fillColor: Colors.white,
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(borderRadius),
-          borderSide: BorderSide.none,
-        ),
-        enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(borderRadius),
-          borderSide: BorderSide(color: Colors.grey.shade200, width: 2),
-        ),
-        focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(borderRadius),
-          borderSide: const BorderSide(color: _primaryColor, width: 2.5),
-        ),
-      ),
-    );
-  }
-}
-
-/// Custom Button
-class CustomButton extends StatelessWidget {
-  final String label;
-  final VoidCallback onPressed;
-
-  const CustomButton({super.key, required this.label, required this.onPressed});
-
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-      width: double.infinity,
-      height: 56,
-      child: ElevatedButton(
-        style: ElevatedButton.styleFrom(
-          backgroundColor: _primaryColor,
-          elevation: 8,
-          shadowColor: _primaryColor.withOpacity(0.4),
-          padding: const EdgeInsets.symmetric(vertical: 16),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(30),
-          ),
-        ),
-        onPressed: onPressed,
-        child: Text(
-          label,
-          style: const TextStyle(
-            fontSize: 18,
-            fontWeight: FontWeight.w900,
-            color: Colors.white,
-            letterSpacing: 1.2,
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-/// Logo Widget
-class LogoWidget extends StatelessWidget {
-  final Widget? child;
-  final Color boundaryColor;
-  final Color backgroundColor;
-
-  const LogoWidget({
-    super.key,
-    this.child,
-    this.boundaryColor = _primaryColor,
-    this.backgroundColor = Colors.white,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      width: 150,
-      height: 150,
-      decoration: BoxDecoration(
-        color: backgroundColor,
-        shape: BoxShape.circle,
-        border: Border.all(color: boundaryColor.withOpacity(0.5), width: 4),
-        boxShadow: const [
-          BoxShadow(
-            color: Colors.black12,
-            blurRadius: 20,
-            offset: Offset(0, 10),
-          ),
-        ],
-      ),
-      child: Center(
-        child:
-            child ??
-            Icon(
-              Icons.assignment_turned_in_rounded,
-              size: 80,
-              color: _primaryColor,
-            ),
-      ),
-    );
-  }
-}
-
-/// --- Login Page ---
 class LoginWidePage extends GetView<AuthController> {
   const LoginWidePage({super.key});
 
@@ -190,7 +25,6 @@ class LoginWidePage extends GetView<AuthController> {
             final Widget loginForm = _buildLoginForm(context);
 
             if (isWideScreen) {
-              // Wide screen layout
               return Center(
                 child: Container(
                   constraints: const BoxConstraints(
@@ -210,18 +44,21 @@ class LoginWidePage extends GetView<AuthController> {
                   ),
                   child: Row(
                     children: [
-                      // Left Decoration
                       Expanded(
                         flex: 5,
-                        child: ClipRRect(
-                          borderRadius: const BorderRadius.only(
-                            topLeft: Radius.circular(24),
-                            bottomLeft: Radius.circular(24),
+                        child: ClipPath(
+                          clipper: CustomWaveClipper(),
+                          child: ClipRRect(
+                            borderRadius: const BorderRadius.only(
+                              topLeft: Radius.circular(24),
+                              bottomLeft: Radius.circular(24),
+                            ),
+                            child: SingleChildScrollView(
+                              child: decorationPanel,
+                            ),
                           ),
-                          child: SingleChildScrollView(child: decorationPanel),
                         ),
                       ),
-                      // Right Login Form
                       Expanded(
                         flex: 5,
                         child: Center(
@@ -242,7 +79,6 @@ class LoginWidePage extends GetView<AuthController> {
                 ),
               );
             } else {
-              // Mobile layout
               return SingleChildScrollView(
                 padding: const EdgeInsets.all(24),
                 child: Column(
@@ -250,9 +86,12 @@ class LoginWidePage extends GetView<AuthController> {
                   children: [
                     Container(
                       height: constraints.maxHeight * 0.35,
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(30),
-                        child: SingleChildScrollView(child: decorationPanel),
+                      child: ClipPath(
+                        clipper: CustomWaveClipper(),
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(30),
+                          child: SingleChildScrollView(child: decorationPanel),
+                        ),
                       ),
                     ),
                     const SizedBox(height: 32),
@@ -352,14 +191,14 @@ class LoginWidePage extends GetView<AuthController> {
         const SizedBox(height: 40),
         CustomTextField(
           controller: controller.usernameController,
-          hintText: "Email/Username",
+          hint: "Email/Username",
           prefixIcon: Icons.mail_outline,
         ),
         const SizedBox(height: 20),
         Obx(
           () => CustomTextField(
             controller: controller.passwordController,
-            hintText: "Password",
+            hint: "Password",
             prefixIcon: Icons.lock_outline,
             obscureText: controller.isPasswordHidden.value,
             suffixIcon: IconButton(
