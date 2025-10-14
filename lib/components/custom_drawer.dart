@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import '../controller/user_controller.dart';
 
 class CustomDrawer extends StatelessWidget {
   final Function(int) onPageSelected;
@@ -8,6 +9,8 @@ class CustomDrawer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final UserController userController = Get.find<UserController>();
+
     return Drawer(
       child: ListView(
         padding: EdgeInsets.zero,
@@ -37,24 +40,18 @@ class CustomDrawer extends StatelessWidget {
               ),
             ),
           ),
-          _drawerItem(
-            Icons.home,
-            "Today's task",
-            () => onPageSelected(0),
-            color: Colors.blue,
-          ),
-          _drawerItem(
-            Icons.history,
-            "History",
-            () => onPageSelected(1),
-            color: Colors.orange,
-          ),
-          _drawerItem(
-            Icons.person,
-            "Profile",
-            () => onPageSelected(2),
-            color: Colors.green,
-          ),
+          _drawerItem(Icons.home, "Today's task", () {
+            onPageSelected(0);
+            Get.back();
+          }, color: Colors.blue),
+          _drawerItem(Icons.history, "History", () {
+            onPageSelected(1);
+            Get.back();
+          }, color: Colors.orange),
+          _drawerItem(Icons.person, "Profile", () {
+            onPageSelected(2);
+            Get.back();
+          }, color: Colors.green),
           const Divider(),
           _drawerItem(Icons.logout, "Logout", () {
             Get.defaultDialog(
@@ -63,8 +60,23 @@ class CustomDrawer extends StatelessWidget {
               textCancel: "Batal",
               textConfirm: "Logout",
               confirmTextColor: Colors.white,
-              onConfirm: () {
-                Get.offAllNamed("/login");
+              onConfirm: () async {
+                // Tutup dialog dulu
+                Get.back();
+
+                // Jalankan logout (hapus semua data dan navigasi)
+                await userController.logout();
+
+                // Tampilkan snackbar notifikasi
+                Get.snackbar(
+                  "Logout Berhasil",
+                  "Anda telah keluar dari akun.",
+                  snackPosition: SnackPosition.BOTTOM,
+                  backgroundColor: Colors.blueAccent.withOpacity(0.2),
+                  colorText: Colors.black,
+                  margin: const EdgeInsets.all(10),
+                  borderRadius: 10,
+                );
               },
             );
           }, color: Colors.red),

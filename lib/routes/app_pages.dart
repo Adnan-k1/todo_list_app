@@ -7,6 +7,7 @@ import '../bindings/home_binding.dart';
 import '../bindings/todo_binding.dart';
 import '../bindings/history_binding.dart';
 import '../bindings/profile_binding.dart';
+import '../bindings/dashboard_binding.dart';
 import '../pages/login_switch_page.dart';
 import '../pages/history_switch_page.dart';
 import '../pages/home_switch_page.dart';
@@ -28,7 +29,13 @@ class AppPages {
     GetPage(
       name: AppRoutes.dashboard,
       page: () => DashboardPage(),
-      bindings: [HomeBinding(), TodoBinding(), HistoryBinding()],
+      bindings: [
+        HomeBinding(),
+        TodoBinding(),
+        HistoryBinding(),
+        DashboardBinding(),
+        ProfileBinding(),
+      ],
     ),
     GetPage(
       name: AppRoutes.addTodo,
