@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:todo_list_app/bindings/dashboard_binding.dart';
 import 'package:todo_list_app/bindings/splashscreen_binding.dart';
 import 'package:todo_list_app/pages/login_switch_page.dart';
 import 'package:todo_list_app/pages/splashscreen_page.dart';
@@ -28,7 +29,14 @@ class AppPages {
     GetPage(
       name: AppRoutes.dashboard,
       page: () => DashboardPage(),
-      bindings: [HomeBinding(), TodoBinding(), HistoryBinding()],
+      // Gabungkan semua bindings di sini ⬇️
+      bindings: [
+        DashboardBinding(), // ⬅️ inisialisasi UserController di sini
+        HomeBinding(),
+        TodoBinding(),
+        HistoryBinding(),
+        ProfileBinding(),
+      ],
     ),
     GetPage(
       name: AppRoutes.addTodo,
