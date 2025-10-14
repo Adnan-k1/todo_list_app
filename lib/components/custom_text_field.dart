@@ -2,19 +2,23 @@ import 'package:flutter/material.dart';
 
 class CustomTextField extends StatelessWidget {
   final TextEditingController controller;
-  final String label;
   final String hint;
-  final bool readOnly;
+  final IconData? prefixIcon;
+  final bool obscureText;
   final Widget? suffixIcon;
+  final String? label;
+  final bool readOnly;
   final VoidCallback? onTap;
 
   const CustomTextField({
     super.key,
     required this.controller,
-    required this.label,
     required this.hint,
-    this.readOnly = false,
+    this.prefixIcon,
+    this.obscureText = false,
     this.suffixIcon,
+    this.label,
+    this.readOnly = false,
     this.onTap,
   });
 
@@ -27,26 +31,29 @@ class CustomTextField extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
-          label,
-          style: const TextStyle(
-            fontWeight: FontWeight.w600,
-            fontSize: 14,
+        if (label != null) ...[
+          Text(
+            label!,
+            style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 14),
           ),
-        ),
-        const SizedBox(height: 6),
+          const SizedBox(height: 6),
+        ],
         TextField(
           controller: controller,
+          obscureText: obscureText,
           readOnly: readOnly,
           onTap: onTap,
           style: const TextStyle(fontSize: 16),
           decoration: InputDecoration(
             hintText: hint,
+            prefixIcon: Icon(prefixIcon),
             suffixIcon: suffixIcon,
             filled: true,
             fillColor: Colors.white,
-            contentPadding:
-                const EdgeInsets.symmetric(vertical: 16, horizontal: 20),
+            contentPadding: const EdgeInsets.symmetric(
+              vertical: 16,
+              horizontal: 20,
+            ),
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(borderRadius),
               borderSide: BorderSide(color: borderColor, width: 1),
