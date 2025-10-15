@@ -53,7 +53,7 @@ class SplashscreenPage extends StatelessWidget {
               style: TextStyle(
                 fontSize: 26,
                 fontWeight: FontWeight.w800,
-                color: Color(0xFF2F4858), // biru tua elegan
+                color: Color(0xFF2F4858),   
                 letterSpacing: 1.2,
               ),
             ),

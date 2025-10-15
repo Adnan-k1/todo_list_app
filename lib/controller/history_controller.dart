@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'todo_controller.dart'; // Pastikan path ini benar (berisi class Todo dan TodoController)
+import 'todo_controller.dart'; 
 
 class HistoryController extends GetxController {
-  // Mengambil instance TodoController yang sudah diinisialisasi
+
   final TodoController todoController = Get.find<TodoController>();
 
-  // Menggunakan getter untuk mengakses list history dari TodoController
+  
   RxList<Todo> get completedTodos => todoController.history;
 
   var isMobile = true.obs;
@@ -23,13 +23,10 @@ class HistoryController extends GetxController {
       textConfirm: "Hapus",
       confirmTextColor: Get.theme.colorScheme.onPrimary,
       onConfirm: () {
-        // 1. Hapus dari database melalui TodoController
-        // Kita perlu mencari index todo ini di list history (karena todoController.deleteFromHistory 
-        // menerima index, bukan objek Todo).
         final index = todoController.history.indexOf(todo);
         
         if (index != -1) {
-          // Panggil metode delete dari TodoController untuk menghapus dari DB dan List GetX
+
           todoController.deleteFromHistory(index); 
           
           Get.back();

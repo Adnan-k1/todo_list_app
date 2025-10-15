@@ -14,9 +14,8 @@ class ProfileSwitchPage extends StatelessWidget {
     return Scaffold(
       body: LayoutBuilder(
         builder: (context, constraints) {
-          // detection width
           controller.updateLayout(constraints);
-          // transforming load page
+
           return Obx(
             () => controller.isMobile.value ? ProfilePage() : ProfileWidePage(),
           );

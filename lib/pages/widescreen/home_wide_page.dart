@@ -48,6 +48,7 @@ class HomeWidePage extends GetView<TodoController> {
         );
       }),
       floatingActionButton: FloatingActionButton(
+                backgroundColor: const Color.fromARGB(255, 102, 230, 183),
         onPressed: () => Get.toNamed('/add-todo'),
         child: const Icon(Icons.add),
       ),
