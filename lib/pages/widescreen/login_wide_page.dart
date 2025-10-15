@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:todo_list_app/controller/auth_controller.dart';
+import 'package:todo_list_app/components/custom_wave_clipper.dart';
 import 'package:todo_list_app/components/custom_text_field.dart';
 import 'package:todo_list_app/components/logo_widget.dart';
 import 'package:todo_list_app/components/custom_button.dart';
@@ -26,6 +27,7 @@ class LoginWidePage extends GetView<AuthController> {
             final Widget loginForm = _buildLoginForm(context);
 
             if (isWideScreen) {
+              // 💻 Tampilan untuk layar lebar
               return Center(
                 child: Container(
                   constraints: const BoxConstraints(
@@ -47,13 +49,16 @@ class LoginWidePage extends GetView<AuthController> {
                     children: [
                       Expanded(
                         flex: 5,
-                        child: ClipRRect(
-                          borderRadius: const BorderRadius.only(
-                            topLeft: Radius.circular(24),
-                            bottomLeft: Radius.circular(24),
-                          ),
-                          child: SingleChildScrollView(
-                            child: decorationPanel,
+                        child: ClipPath(
+                          clipper: CustomWaveClipper(),
+                          child: ClipRRect(
+                            borderRadius: const BorderRadius.only(
+                              topLeft: Radius.circular(24),
+                              bottomLeft: Radius.circular(24),
+                            ),
+                            child: SingleChildScrollView(
+                              child: decorationPanel,
+                            ),
                           ),
                         ),
                       ),
@@ -77,16 +82,22 @@ class LoginWidePage extends GetView<AuthController> {
                 ),
               );
             } else {
+              // 📱 Tampilan mobile
               return SingleChildScrollView(
                 padding: const EdgeInsets.all(24),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                    SizedBox(
+                    Container(
                       height: mediaQueryHeight * 0.35,
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(30),
-                        child: decorationPanel,
+                      child: ClipPath(
+                        clipper: CustomWaveClipper(),
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(30),
+                          child: SingleChildScrollView(
+                            child: decorationPanel,
+                          ),
+                        ),
                       ),
                     ),
                     const SizedBox(height: 32),
@@ -100,6 +111,8 @@ class LoginWidePage extends GetView<AuthController> {
       ),
     );
   }
+
+  // Panel dekoratif hijau
   Widget _buildDecorationPanel() {
     return Container(
       decoration: BoxDecoration(
@@ -155,6 +168,7 @@ class LoginWidePage extends GetView<AuthController> {
     );
   }
 
+  // Form login
   Widget _buildLoginForm(BuildContext context) {
     final controller = Get.isRegistered<AuthController>()
         ? Get.find<AuthController>()
