@@ -27,7 +27,7 @@ class LoginWidePage extends GetView<AuthController> {
             final Widget loginForm = _buildLoginForm(context);
 
             if (isWideScreen) {
-              // 💻 Tampilan untuk layar lebar
+              // 💻 Tampilan layar lebar
               return Center(
                 child: Container(
                   constraints: const BoxConstraints(
@@ -88,7 +88,7 @@ class LoginWidePage extends GetView<AuthController> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                    Container(
+                    SizedBox(
                       height: mediaQueryHeight * 0.35,
                       child: ClipPath(
                         clipper: CustomWaveClipper(),
@@ -112,7 +112,7 @@ class LoginWidePage extends GetView<AuthController> {
     );
   }
 
-  // Panel dekoratif hijau
+  // 🌿 Panel dekoratif hijau di sisi kiri
   Widget _buildDecorationPanel() {
     return Container(
       decoration: BoxDecoration(
@@ -168,7 +168,7 @@ class LoginWidePage extends GetView<AuthController> {
     );
   }
 
-  // Form login
+  // 🧾 Form login utama
   Widget _buildLoginForm(BuildContext context) {
     final controller = Get.isRegistered<AuthController>()
         ? Get.find<AuthController>()
@@ -240,13 +240,11 @@ class LoginWidePage extends GetView<AuthController> {
           ),
         ),
         const SizedBox(height: 40),
-
         CustomButton(
           label: "LOG IN",
           onPressed: () => controller.login(context),
         ),
         const SizedBox(height: 24),
-
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
