@@ -13,13 +13,13 @@ class AuthController extends GetxController {
   var isPasswordHidden = true.obs;
   var isMobile = true.obs;
 
-  // --- Login ---
+ 
   void login(BuildContext context) async {
     final username = usernameController.text.trim();
     final password = passwordController.text.trim();
 
     if (username == dummyusername && password == dummypassword) {
-      // Simpan status login
+      
       final prefs = await SharedPreferences.getInstance();
       await prefs.setBool("isLoggedIn", true);
 
@@ -31,7 +31,7 @@ class AuthController extends GetxController {
         ),
       );
 
-      // Navigasi ke Dashboard
+
       Get.offAllNamed(AppRoutes.dashboard);
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
@@ -44,7 +44,6 @@ class AuthController extends GetxController {
     }
   }
 
-  // --- Logout ---
   Future<void> logout() async {
     Get.defaultDialog(
       title: "Konfirmasi Logout",
@@ -53,11 +52,11 @@ class AuthController extends GetxController {
       textConfirm: "Logout",
       confirmTextColor: Colors.white,
       onConfirm: () async {
-        // Hapus status login
+
         final prefs = await SharedPreferences.getInstance();
         await prefs.remove("isLoggedIn");
 
-        // Navigasi ke Login Page
+     
         Get.offAllNamed(AppRoutes.login);
       },
     );
@@ -76,9 +75,9 @@ class AuthController extends GetxController {
 
   void updateLayout(BoxConstraints constraints) {
     if (constraints.maxWidth > 600) {
-      isMobile.value = false; // layar lebar → wide
+      isMobile.value = false; 
     } else {
-      isMobile.value = true; // layar kecil → mobile
+      isMobile.value = true; 
     }
   }
 }

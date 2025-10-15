@@ -15,6 +15,8 @@ class LoginWidePage extends GetView<AuthController> {
 
   @override
   Widget build(BuildContext context) {
+    final mediaQueryHeight = MediaQuery.of(context).size.height;
+
     return Scaffold(
       backgroundColor: _scaffoldBackgroundColor,
       body: SafeArea(
@@ -25,6 +27,7 @@ class LoginWidePage extends GetView<AuthController> {
             final Widget loginForm = _buildLoginForm(context);
 
             if (isWideScreen) {
+              // 💻 Tampilan layar lebar
               return Center(
                 child: Container(
                   constraints: const BoxConstraints(
@@ -79,18 +82,21 @@ class LoginWidePage extends GetView<AuthController> {
                 ),
               );
             } else {
+              // 📱 Tampilan mobile
               return SingleChildScrollView(
                 padding: const EdgeInsets.all(24),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                    Container(
-                      height: constraints.maxHeight * 0.35,
+                    SizedBox(
+                      height: mediaQueryHeight * 0.35,
                       child: ClipPath(
                         clipper: CustomWaveClipper(),
                         child: ClipRRect(
                           borderRadius: BorderRadius.circular(30),
-                          child: SingleChildScrollView(child: decorationPanel),
+                          child: SingleChildScrollView(
+                            child: decorationPanel,
+                          ),
                         ),
                       ),
                     ),
@@ -106,6 +112,7 @@ class LoginWidePage extends GetView<AuthController> {
     );
   }
 
+  // 🌿 Panel dekoratif hijau di sisi kiri
   Widget _buildDecorationPanel() {
     return Container(
       decoration: BoxDecoration(
@@ -123,12 +130,15 @@ class LoginWidePage extends GetView<AuthController> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            LogoWidget(
-              child: Image.asset(
-                "lib/assets/images/logo.png",
-                width: 135,
-                height: 135,
-                fit: BoxFit.contain,
+            Hero(
+              tag: 'app_logo',
+              child: LogoWidget(
+                child: Image.asset(
+                  "lib/assets/images/logo.png",
+                  width: 135,
+                  height: 135,
+                  fit: BoxFit.contain,
+                ),
               ),
             ),
             const SizedBox(height: 32),
@@ -136,7 +146,7 @@ class LoginWidePage extends GetView<AuthController> {
               "TO DO LIST",
               textAlign: TextAlign.center,
               style: TextStyle(
-                fontSize: 40,
+                fontSize: 38,
                 fontWeight: FontWeight.w900,
                 color: Colors.white,
                 letterSpacing: 1.5,
@@ -158,6 +168,7 @@ class LoginWidePage extends GetView<AuthController> {
     );
   }
 
+  // 🧾 Form login utama
   Widget _buildLoginForm(BuildContext context) {
     final controller = Get.isRegistered<AuthController>()
         ? Get.find<AuthController>()
@@ -191,7 +202,7 @@ class LoginWidePage extends GetView<AuthController> {
         const SizedBox(height: 40),
         CustomTextField(
           controller: controller.usernameController,
-          hint: "Email/Username",
+          hint: "Email / Username",
           prefixIcon: Icons.mail_outline,
         ),
         const SizedBox(height: 20),

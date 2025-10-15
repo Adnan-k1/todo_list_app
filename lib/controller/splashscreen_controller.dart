@@ -17,7 +17,7 @@ class SplashscreenController extends GetxController {
 
     final prefs = await SharedPreferences.getInstance();
 
-    // Tunggu durasi minimum splash screen
+
     await Future.delayed(minDuration);
 
     final isLoggedIn = prefs.getBool("isLoggedIn") ?? false;
